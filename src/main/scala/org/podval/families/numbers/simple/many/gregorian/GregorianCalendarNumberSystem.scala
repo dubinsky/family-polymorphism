@@ -9,9 +9,11 @@ class GregorianCalendarNumberSystem
 {
   final override type Number = GregorianCalendarNumber
 
-  def createNumber(raw: Raw): GregorianCalendarNumberSystem#Number = new GregorianCalendarNumber(raw) {
-    override def numberSystem: GregorianCalendarNumberSystem = GregorianCalendarNumberSystem.this
-  }
+  def createNumber(raw: Raw): GregorianCalendarNumberSystem#Number =
+    new GregorianCalendarNumber(raw) {
+      override def numberSystem: GregorianCalendarNumberSystem =
+        GregorianCalendarNumberSystem.this
+    }
 }
 
 

@@ -8,4 +8,6 @@ import org.podval.families.numbers.simple.many.calendar.AbstractCalendarNumber
 abstract class GregorianCalendarNumber(raw: Raw)
   extends AbstractCalendarNumber[GregorianCalendarNumberSystem](raw)
 { this: GregorianCalendarNumberSystem#Number =>
+
+  def morningHours(value: Int): GregorianCalendarNumberSystem#Number = ???
 }
