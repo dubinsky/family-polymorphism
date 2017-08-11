@@ -1,2 +1,7 @@
+.gradle
+.idea
+out
+build
+*.iml
 *.class
 *.log
