@@ -1,7 +1,7 @@
 package org.podval.families.numbers.simple.one
 
 trait NumberSystem {
-  type Raw = (Boolean, List[Int])
+  import NumberSystem.Raw
 
   protected type Number <: NumberBase
 
@@ -24,8 +24,7 @@ trait NumberSystem {
 
     def digits: List[Int]
 
-    final def digit(n: Int): Int =
-      if (digits.length >= n) digits(n) else 0
+    final def digit(n: Int): Int = if (digits.length >= n) digits(n) else 0
 
     final def digit(n: Int, value: Int): Number =
       create(negative, digits.padTo(n + 1, 0).updated(n, value))
@@ -36,13 +35,11 @@ trait NumberSystem {
 
     final def *(n: Int): Number = create(negative, digits map (n * _))
 
-    private[this] final def plusMinus[T <: Number](operationNegation: Boolean, that: Number): Raw =
-      ???
+    private[this] final def plusMinus(operationNegation: Boolean, that: Number): Raw = ???
 
-    final def compare(that: Number): Int =
-      ???
+    final def compare(that: Number): Int = ???
 
-    // TODO unchecked because of the erasure
+    // TODO unchecked because of the erasure; compare NumberSystems...
     final override def equals(other: Any): Boolean =
       if (!other.isInstanceOf[Number]) false else compare(other.asInstanceOf[Number]) == 0
 
@@ -53,4 +50,9 @@ trait NumberSystem {
     final override def negative: Boolean = raw._1
     final override def digits: List[Int] = raw._2
   }
+}
+
+
+object NumberSystem {
+  type Raw = (Boolean, List[Int])
 }

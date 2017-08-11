@@ -1,7 +1,7 @@
 package org.podval.families.numbers.complex.one
 
 trait NumberSystem {
-  type Raw = (Boolean, List[Int])
+  import NumberSystem.Raw
 
   protected type Point <: PointBase
 
@@ -43,26 +43,20 @@ trait NumberSystem {
 
     def digits: List[Int]
 
-    final def digit(n: Int): Int =
-      if (digits.length >= n) digits(n) else 0
+    final def digit(n: Int): Int = if (digits.length >= n) digits(n) else 0
 
     final def digit(n: Int, value: Int): SelfType =
       create(negative, digits.padTo(n + 1, 0).updated(n, value))
 
-    protected final def plus[T <: Number](that: Number): Raw =
-      plusMinus(operationNegation = false, that)
+    protected final def plus(that: Number): Raw = plusMinus(operationNegation = false, that)
 
-    protected final def minus[T <: Number](that: Number): Raw =
-      plusMinus(operationNegation = true, that)
+    protected final def minus(that: Number): Raw = plusMinus(operationNegation = true, that)
 
-    private[this] final def plusMinus[T <: Number](operationNegation: Boolean, that: Number): Raw =
-      ???
+    private[this] final def plusMinus(operationNegation: Boolean, that: Number): Raw = ???
 
-    protected final def compare_(that: Number): Int =
-      ???
+    protected final def compare_(that: Number): Int = ???
 
-    protected final def equals_(that: Number): Boolean =
-      compare_(that) == 0
+    protected final def equals_(that: Number): Boolean = compare_(that) == 0
   }
 
 
@@ -70,8 +64,7 @@ trait NumberSystem {
 
     protected override type SelfType = Point
 
-    protected override def create(raw: Raw): Point =
-      createPoint(raw)
+    protected override def create(raw: Raw): Point = createPoint(raw)
 
     final def +(that: Interval): Point = createPoint(plus(that))
 
@@ -79,10 +72,9 @@ trait NumberSystem {
 
     final def -(that: Point): Interval = createInterval(minus(that))
 
-    final def compare(that: Point): Int =
-      compare_(that)
+    final def compare(that: Point): Int = compare_(that)
 
-    // TODO unchecked because of the erasure
+    // TODO unchecked because of the erasure; compare NumberSystems...
     final override def equals(other: Any): Boolean =
       if (!other.isInstanceOf[Point]) false else equals_(other.asInstanceOf[Point])
 
@@ -93,8 +85,7 @@ trait NumberSystem {
 
     protected override type SelfType = Interval
 
-    protected override def create(raw: Raw): Interval =
-      createInterval(raw)
+    protected override def create(raw: Raw): Interval = createInterval(raw)
 
     final def +(that: Interval): Interval = createInterval(plus(that))
 
@@ -114,4 +105,9 @@ trait NumberSystem {
     final override def negative: Boolean = raw._1
     final override def digits: List[Int] = raw._2
   }
+}
+
+
+object NumberSystem {
+  type Raw = (Boolean, List[Int])
 }

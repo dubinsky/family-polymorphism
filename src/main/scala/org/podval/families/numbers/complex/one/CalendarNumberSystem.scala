@@ -1,6 +1,7 @@
 package org.podval.families.numbers.complex.one
 
-abstract class CalendarNumberSystem extends NumberSystem {
+trait CalendarNumberSystem extends NumberSystem {
+  import NumberSystem.Raw
 
   protected final override type Interval = CalendarInterval
 

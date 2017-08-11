@@ -1,6 +1,7 @@
 package org.podval.families.numbers.simple.one
 
-abstract class CalendarNumberSystem extends NumberSystem {
+trait CalendarNumberSystem extends NumberSystem {
+  import NumberSystem.Raw
 
   trait CalendarNumber extends NumberBase {
     final def days: Int = digit(0)
@@ -15,7 +16,5 @@ abstract class CalendarNumberSystem extends NumberSystem {
 
   abstract class AbstractCalendarNumber(raw: Raw)
     extends AbstractNumber(raw)
-    with NumberBase
-  {
-  }
+    with CalendarNumber
 }
