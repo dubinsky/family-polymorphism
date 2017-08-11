@@ -28,16 +28,4 @@ abstract class CalendarNumberSystem extends NumberSystem {
     extends AbstractNumber(raw)
     with CalendarNumber
     with IntervalBase
-  {
-    override protected def numberSystem: NumberSystem =
-      CalendarNumberSystem.this
-
-    // TODO can these be moved into AbstractNumber by some miracle?
-
-    override protected def createPoint(raw: Raw): Point =
-      CalendarNumberSystem.this.createPoint(raw)
-
-    override protected def createInterval(raw: Raw): Interval =
-      CalendarNumberSystem.this.createInterval(raw)
-  }
 }

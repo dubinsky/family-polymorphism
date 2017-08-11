@@ -17,11 +17,5 @@ abstract class CalendarNumberSystem extends NumberSystem {
     extends AbstractNumber(raw)
     with NumberBase
   {
-    final override protected def numberSystem: NumberSystem =
-      CalendarNumberSystem.this
-
-    // TODO can this be moved into AbstractNumber by some miracle?
-    final override protected def create(raw: Raw): Number =
-      CalendarNumberSystem.this.createNumber(raw)
   }
 }

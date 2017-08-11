@@ -9,15 +9,16 @@ trait NumberSystem {
 
   trait NumberBase extends Ordered[Number] {
 
-    protected def numberSystem: NumberSystem
+    protected final def numberSystem: NumberSystem = NumberSystem.this
 
-    protected def create(raw: Raw): Number
-    // This can be final, but defining it as
+    // Defining it as
     //   = numberSystem.createNumber(raw)
     // causes an error:
     //   type mismatch;
     //   found   : org.podval.families.numbers.simple.one.NumberSystem#Number
     //   required: NumberSystem.this.Number
+    protected final def create(raw: Raw): Number =
+      NumberSystem.this.createNumber(raw)
 
     def negative: Boolean
 

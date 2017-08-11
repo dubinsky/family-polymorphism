@@ -19,23 +19,25 @@ trait NumberSystem {
 
     protected def create(raw: Raw): SelfType
 
-    protected def numberSystem: NumberSystem
+    final def numberSystem: NumberSystem = NumberSystem.this
 
-    protected def createPoint(raw: Raw): Point
-    // This can be final, but defining it as
+    // Defining this as
     //   = numberSystem.createPoint(raw)
     // causes an error:
     //   type mismatch;
     //   found   : org.podval.families.numbers.complex.one.NumberSystem#Point
     //   required: NumberSystem.this.Point
+    protected final def createPoint(raw: Raw): Point =
+      NumberSystem.this.createPoint(raw)
 
-    protected def createInterval(raw: Raw): Interval
     // This can be final, but defining it as
     //   = numberSystem.createInterval(raw)
     // causes an error:
     //   type mismatch;
     //   found   : org.podval.families.numbers.complex.one.NumberSystem#Interval
     //   required: NumberSystem.this.Interval
+    protected final def createInterval(raw: Raw): Interval =
+      NumberSystem.this.createInterval(raw)
 
     def negative: Boolean
 
