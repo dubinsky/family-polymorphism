@@ -1,4 +1,4 @@
-package org.podval.families.numbers.complex.one
+package org.podval.families.numbers.complex.monolithic
 
 trait NumberSystem {
   import NumberSystem.Raw

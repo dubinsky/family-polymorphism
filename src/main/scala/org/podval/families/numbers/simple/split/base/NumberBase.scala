@@ -1,4 +1,4 @@
-package org.podval.families.numbers.simple.many.base
+package org.podval.families.numbers.simple.split.base
 
 trait NumberBase[S <: NumberSystem[S]] extends Ordered[S#Number] { this: S#Number =>
   import NumberSystem.Raw

@@ -1,4 +1,4 @@
-package org.podval.families.numbers.simple.one
+package org.podval.families.numbers.simple.monolithic
 
 object GregorianCalendarNumberSystem extends CalendarNumberSystem {
   import NumberSystem.Raw

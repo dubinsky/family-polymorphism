@@ -1,6 +1,6 @@
-package org.podval.families.numbers.simple.many.calendar
+package org.podval.families.numbers.simple.split.calendar
 
-import org.podval.families.numbers.simple.many.base.NumberBase
+import org.podval.families.numbers.simple.split.base.NumberBase
 
 trait CalendarNumber[S <: CalendarNumberSystem[S]] extends NumberBase[S] { this: S#Number =>
   final def days: Int = digit(0)

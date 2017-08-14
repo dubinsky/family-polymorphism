@@ -1,4 +1,4 @@
-package org.podval.families.numbers.complex.one
+package org.podval.families.numbers.complex.monolithic
 
 trait CalendarNumberSystem extends NumberSystem {
   import NumberSystem.Raw

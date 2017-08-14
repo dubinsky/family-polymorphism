@@ -1,7 +1,7 @@
-package org.podval.families.numbers.simple.many.gregorian
+package org.podval.families.numbers.simple.split.gregorian
 
-import org.podval.families.numbers.simple.many.base.NumberSystem.Raw
-import org.podval.families.numbers.simple.many.calendar.AbstractCalendarNumber
+import org.podval.families.numbers.simple.split.base.NumberSystem.Raw
+import org.podval.families.numbers.simple.split.calendar.AbstractCalendarNumber
 
 // TODO has to be abstract and not final: it needs to be overridden in
 //   GregorianCalendarNumberSystem.createNumber.

@@ -1,4 +1,4 @@
-package org.podval.families.numbers.simple.many.base
+package org.podval.families.numbers.simple.split.base
 
 trait NumberSystem[S <: NumberSystem[S]] { this: S =>
   import NumberSystem.Raw
