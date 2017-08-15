@@ -1,6 +1,6 @@
 package org.podval.families.numbers.simple.split.base
 
-trait NumberSystem[S <: NumberSystem[S]] { this: S =>
+trait NumberSystem[S <: NumberSystem[S]] { //this: S =>
   import NumberSystem.Raw
 
   type Number <: NumberBase[S]

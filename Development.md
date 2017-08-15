@@ -1,4 +1,6 @@
-## Basic
+## Monolithic
+
+### Basic
 
 A family containing types T1 and T2.
 
@@ -31,7 +33,7 @@ trait Family {
   type T1 <: T1Base
 
   trait T1Base extends FamilyMember { this: T1 =>
-    def add(t2: T1): T1
+    def add(t1: T1): T1 = createT1
     def double: T1 = add(this) 
   }
 
@@ -78,7 +80,6 @@ object Instance extends Family {
   override type T1 = T1Instance
 
   class T1Instance extends T1Base with FamilyMemberInstance {
-    final override def add(t2: T1): T1 = ???
   }
 
   override def createT1: T1 = new T1
@@ -99,10 +100,14 @@ object UseInstance {
 }
 ```
 
-## F-Bound
+### Companion "objects"
 
-Previously, return type of the `family` method was refined by the instance by convention;
-this can be enforced by abstracting the `Family` over the type of the instance;
+TODO family instance is a companion object for all Tis;
+  sometimes an individual one is needed...
+
+### F-Bound
+
+Alternatively, `Family` can be abstracted over the type of the instance;
 that type can then be specified as the return type of the `family` method:
 
 ```Scala
@@ -115,7 +120,7 @@ trait Family[F <: Family[F]] {
   type T1 <: T1Base
 
   trait T1Base extends FamilyMember { this: T1 =>
-    def add(t2: T1): T1
+    def add(t2: T1): T1 = createT1
     def double: T1 = add(this)
   }
 
@@ -150,7 +155,6 @@ class Instance extends Family[Instance] {
   final override type T1 = T1Instance
 
   class T1Instance extends T1Base with FamilyMemberInstance {
-    final override def add(t2: T1): T1 = add(this)
   }
 
   final override def createT1: T1 = new T1
@@ -175,3 +179,84 @@ object UseInstance {
 
 TODO Looks like self-typing of the Family and using F#Ti instead of Ti is needed only
   for the split encoding...
+
+
+### Sibling family members
+
+TODO two encodings: "selfType" abstract type and type parameters.
+
+
+## Split
+
+```Scala
+// TODO To avoid compilation errors, instead of T1, use F#Ti.
+trait Family[F <: Family[F]] { // TODO when is this needed?: this: F =>
+
+  type T1 <: T1Base[F]
+
+  def createT1: T1
+
+  type T2 <: T2Base[F]
+
+  def createT2: T2
+}
+
+
+trait FamilyMember [F <: Family[F]] {
+  def family: F
+}
+
+
+// TODO To avoid compilation errors, instead of type aliases, use F#Ti directly,
+// not type T2 = F#T2
+trait T1Base[F <: Family[F]] extends FamilyMember[F] { this: F#T1 =>
+  def add(t2: F#T1): F#T1 = family.createT1
+  def double: F#T1 = add(this)
+}
+
+
+trait T2Base[F <: Family[F]] extends FamilyMember[F] { this: F#T2 =>
+}
+```
+
+It is no longer possible to override abstract type Ti with the class
+derived from TiBase, since it is defined in a separate file :)
+
+
+```Scala
+class Instance extends Family[Instance] {
+
+  trait FamilyMemberInstance extends FamilyMember[Instance] {
+    final override def family: Instance = Instance.this
+  }
+
+  final override type T1 = T1Instance
+
+  final override def createT1: T1 = new T1Instance with FamilyMemberInstance
+
+  final override type T2 = T2Instance
+
+  final override def createT2: T2 = new T2 with FamilyMemberInstance
+
+  final def familyInstanceMethod: Int = ???
+}
+
+
+abstract class T1Instance extends T1Base[Instance] {
+}
+
+
+abstract class T2Instance extends T2Base[Instance] {
+}
+
+
+object Instance extends Instance
+
+
+object UseInstance {
+  def main(args: Array[String]): Unit = {
+    val t1: Instance.T1 = Instance.createT1
+    val x: Int = t1.family.familyInstanceMethod
+  }
+}
+```

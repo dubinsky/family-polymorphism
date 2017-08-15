@@ -18,12 +18,15 @@ Java's generics - unable to tie the knot (no self-types).
 Scala generics - ?
 
 
-
-
 ## TODO
+
+Are self-types critical for the monolithic encoding? See paper...
 
 Split encoding inspired by
  https://stackoverflow.com/questions/1154571/scala-abstract-types-vs-generics
+
+Object creation methods (createTi) need to be globalized in the family trait itself -
+just like the types Ti (both for the monolithic and split encoding encoding).
 
 "Companion" objects.
  
@@ -36,8 +39,14 @@ It is still not clear how to deal with the sealed enumeration types...
      Referencing/importing them from stand-alone objects probably will be ugly, but what are the
      alternatives?
 
-Is this a "cake"?
+Extending the family:
+  problem similar to the one with aliases: Scala doesn't know that two abstract types
+    are the same, even if one is assigned to the other... Or does it - with `final```? 
+  no "has-a" possible; always "is-a"?
+  
+Add toString to the NumberSystem example?
 
+Is this a "cake"?
 
 When I put MonthDescriptor inside Month companion, types do not match; when it is outside, they do, although it
     references a type from the companion (Month.Name).
