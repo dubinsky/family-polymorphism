@@ -1,9 +1,9 @@
-package org.podval.fp;
+package org.podval.families.fpj;
 
-// Push implementation of isRoot(), as*() and parent() up the hierarchy;
-// Make RootFolder and NonRootFolder need to be abstract classes, not interfaces.
+// Use covariant return types (available since Java 1.5 (2004)) to make return types more precise;
+// parent() needs to be pulled down the hierarchy so that it can be overridden.
 
-interface fpj3 {
+interface fpj4 {
 
     // Interfaces
 
@@ -24,20 +24,17 @@ interface fpj3 {
     }
 
     abstract class NonRootFolder implements Folder {
-        public NonRootFolder(final Folder parent_) {
-            this.parent_ = parent_;
-        }
         @Override public final boolean isRoot() { return false; }
         @Override public final RootFolder asRootFolder() { throw new ClassCastException(); }
         @Override public final NonRootFolder asNonRootFolder() { return this; }
-        public final Folder parent() { return parent_; }
-        private final Folder parent_;
+        public abstract Folder parent();
     }
 
 
     // GDrive
 
     interface GDriveConnection extends Connection {
+        @Override GDriveRootFolderImpl rootFolder();
         // GDrive-specific methods
     }
 
@@ -47,7 +44,7 @@ interface fpj3 {
 
 
     final class GDriveConnectionImpl implements GDriveConnection {
-        @Override public RootFolder rootFolder() { return null; } // Not really :)
+        @Override public GDriveRootFolderImpl rootFolder() { return null; } // Not really :)
     }
 
     final class GDriveRootFolderImpl extends RootFolder implements GDriveFolder {
@@ -55,16 +52,19 @@ interface fpj3 {
     }
 
     final class GDriveNonRootFolderImpl extends NonRootFolder implements GDriveFolder {
-        public GDriveNonRootFolderImpl(final Folder parent_) {
-            super(parent_);
+        public GDriveNonRootFolderImpl(final GDriveFolder parent_) {
+            this.parent_ = parent_;
         }
+        @Override public GDriveFolder parent() { return parent_; }
+        private final GDriveFolder parent_;
         // GDrive-specific implementation
     }
 
+    // Problem: rootFolder() and parent() have to be overridden (and parent() has to be implemented)
+    // in exactly the same way for DropBox, file system etc. (not concise).
 
     // Problem: GDrive-specific implementation can not be shared between root and non-root folders
     // and has to be duplicated (not concise).
 
-
-    // Problem: GDriveNonRootFolder.parent returns Folder, but should return GDriveFolder (not precise).
+    // Problem: as*() return Folder, but should return specific subtype of Folder (not precise).
 }

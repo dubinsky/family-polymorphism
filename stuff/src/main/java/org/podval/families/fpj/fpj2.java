@@ -1,4 +1,4 @@
-package org.podval.fp;
+package org.podval.families.fpj;
 
 // Introduce RootFolder and NonRootFolder types
 

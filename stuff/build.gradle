@@ -8,5 +8,4 @@ description = 'stuff'
 dependencies {
     implementation "org.scala-lang:scala-library:$scalaVersion"
     testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.scalatest:scalatest_$scalaVersionMajor:$scalatestVersion"
 }

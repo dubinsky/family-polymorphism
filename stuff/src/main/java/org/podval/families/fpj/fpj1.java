@@ -1,4 +1,4 @@
-package org.podval.fp;
+package org.podval.families.fpj;
 
 // With interface wrapper, all code can be put in one file to simplify the presentation
 

@@ -1,4 +1,4 @@
-package org.podval.fp;
+package org.podval.families.fpj;
 
 // REALLY use generics: system of inequalities over types
 

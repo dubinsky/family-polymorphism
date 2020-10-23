@@ -1,4 +1,4 @@
-package org.podval.fp;
+package org.podval.families.fpj;
 
 // Use generics (available since Java 1.5 (2004)) to make base interface aware of the specific Folder subtype.
 

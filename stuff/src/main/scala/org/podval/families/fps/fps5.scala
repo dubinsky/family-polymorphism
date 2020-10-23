@@ -1,4 +1,4 @@
-package org.podval.fp
+package org.podval.families.fps
 
 // Use traits as scopes to define type members so that they apply across the family and self-types
 // to make types precise and eliminate casts.
