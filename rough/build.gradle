@@ -1,11 +1,10 @@
 plugins {
     id 'scala'
-    id 'com.github.maiflai.scalatest'
 }
 
 description = 'rough notes'
 
 dependencies {
     implementation "org.scala-lang:scala-library:$scalaVersion"
-    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.testng:testng:$testngVersion"
 }
