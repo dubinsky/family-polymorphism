@@ -4,7 +4,3 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-
-include ':ernst'
-include ':rough'
-include ':stuff'

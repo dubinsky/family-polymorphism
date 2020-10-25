@@ -67,4 +67,4 @@ object GDriveStorageSystem extends StorageSystem {
 // [Problem: parent parameter has to be overridden in a specific way (traits do not take parameters... yet).]
 
 
-// Problem: all the types of the the familty have to be declared (and defined) in one scope (hence, in one file).
+// Problem: all the types of the the family have to be declared (and defined) in one scope (hence, in one file).
