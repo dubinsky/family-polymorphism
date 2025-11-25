@@ -9,7 +9,7 @@ object fps3 {
   trait Connection[
     C <: Connection[C, F],
     F <: Folder[C, F]] {
-    def rootFolder: F with RootFolder[C, F]
+    def rootFolder: F & RootFolder[C, F]
   }
 
   trait Folder[
@@ -18,31 +18,31 @@ object fps3 {
     this: F =>
     def isRoot: Boolean
 
-    def asRootFolder: F with RootFolder[C, F]
+    def asRootFolder: F & RootFolder[C, F]
 
-    def asNonRootFolder: F with NonRootFolder[C, F]
+    def asNonRootFolder: F & NonRootFolder[C, F]
   }
 
   trait RootFolder[
     C <: Connection[C, F],
     F <: Folder[C, F]] extends Folder[C, F] {
-    this: F with RootFolder[C, F] =>
+    this: F & RootFolder[C, F] =>
     final override def isRoot: Boolean = true
 
-    final override def asRootFolder: F with RootFolder[C, F] = this
+    final override def asRootFolder: F & RootFolder[C, F] = this
 
-    final override def asNonRootFolder: F with NonRootFolder[C, F] = throw new ClassCastException
+    final override def asNonRootFolder: F & NonRootFolder[C, F] = throw new ClassCastException
   }
 
   trait NonRootFolder[
     C <: Connection[C, F],
     F <: Folder[C, F]] extends Folder[C, F] {
-    this: F with NonRootFolder[C, F] =>
+    this: F & NonRootFolder[C, F] =>
     final override def isRoot: Boolean = false
 
-    final override def asRootFolder: F with RootFolder[C, F] = throw new ClassCastException
+    final override def asRootFolder: F & RootFolder[C, F] = throw new ClassCastException
 
-    final override def asNonRootFolder: F with NonRootFolder[C, F] = this
+    final override def asNonRootFolder: F & NonRootFolder[C, F] = this
 
     val parent: F
   }

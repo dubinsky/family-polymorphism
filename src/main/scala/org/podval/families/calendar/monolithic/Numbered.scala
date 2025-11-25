@@ -1,6 +1,6 @@
 package org.podval.families.calendar.monolithic
 
-abstract class Numbered[T <: Numbered[T]](val number: Int) extends Ordered[T] {
+abstract class Numbered[T <: Numbered[T]](val number: Int) extends Matchable with Ordered[T] {
 
   final override def equals(other: Any): Boolean = other match {
     case that: Numbered[_] => number == that.number

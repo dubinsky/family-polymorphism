@@ -9,16 +9,16 @@ object fps2 {
   trait Connection[
     C <: Connection[C, F, R, N],
     F <: Folder[C, F, R, N],
-    R <: Folder[C, F, R, N] with RootFolder[C, F, R, N],
-    N <: Folder[C, F, R, N] with NonRootFolder[C, F, R, N]] {
+    R <: Folder[C, F, R, N] & RootFolder[C, F, R, N],
+    N <: Folder[C, F, R, N] & NonRootFolder[C, F, R, N]] {
     def rootFolder: R
   }
 
   trait Folder[
     C <: Connection[C, F, R, N],
     F <: Folder[C, F, R, N],
-    R <: Folder[C, F, R, N] with RootFolder[C, F, R, N],
-    N <: Folder[C, F, R, N] with NonRootFolder[C, F, R, N]] {
+    R <: Folder[C, F, R, N] & RootFolder[C, F, R, N],
+    N <: Folder[C, F, R, N] & NonRootFolder[C, F, R, N]] {
     def isRoot: Boolean
 
     def asRootFolder: R
@@ -29,8 +29,8 @@ object fps2 {
   trait RootFolder[
     C <: Connection[C, F, R, N],
     F <: Folder[C, F, R, N],
-    R <: Folder[C, F, R, N] with RootFolder[C, F, R, N],
-    N <: Folder[C, F, R, N] with NonRootFolder[C, F, R, N]] extends Folder[C, F, R, N] {
+    R <: Folder[C, F, R, N] & RootFolder[C, F, R, N],
+    N <: Folder[C, F, R, N] & NonRootFolder[C, F, R, N]] extends Folder[C, F, R, N] {
     final override def isRoot: Boolean = true
 
     final override def asRootFolder: R = this.asInstanceOf[R]
@@ -41,8 +41,8 @@ object fps2 {
   trait NonRootFolder[
     C <: Connection[C, F, R, N],
     F <: Folder[C, F, R, N],
-    R <: Folder[C, F, R, N] with RootFolder[C, F, R, N],
-    N <: Folder[C, F, R, N] with NonRootFolder[C, F, R, N]] extends Folder[C, F, R, N] {
+    R <: Folder[C, F, R, N] & RootFolder[C, F, R, N],
+    N <: Folder[C, F, R, N] & NonRootFolder[C, F, R, N]] extends Folder[C, F, R, N] {
     final override def isRoot: Boolean = false
 
     final override def asRootFolder: R = throw new ClassCastException

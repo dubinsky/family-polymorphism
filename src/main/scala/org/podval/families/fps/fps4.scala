@@ -10,7 +10,7 @@ object fps4 {
     type C <: Connection
     type F <: Folder
 
-    def rootFolder: F with RootFolder
+    def rootFolder: F & RootFolder
   }
 
   trait Folder {
@@ -19,9 +19,9 @@ object fps4 {
 
     def isRoot: Boolean
 
-    def asRootFolder: F with RootFolder
+    def asRootFolder: F & RootFolder
 
-    def asNonRootFolder: F with NonRootFolder
+    def asNonRootFolder: F & NonRootFolder
   }
 
   trait RootFolder extends Folder {
@@ -30,9 +30,9 @@ object fps4 {
 
     final override def isRoot: Boolean = true
 
-    final override def asRootFolder: F with RootFolder = this.asInstanceOf[F with RootFolder]
+    final override def asRootFolder: F & RootFolder = this.asInstanceOf[F & RootFolder]
 
-    final override def asNonRootFolder: F with NonRootFolder = throw new ClassCastException
+    final override def asNonRootFolder: F & NonRootFolder = throw new ClassCastException
   }
 
   trait NonRootFolder extends Folder {
@@ -41,9 +41,9 @@ object fps4 {
 
     final override def isRoot: Boolean = false
 
-    final override def asRootFolder: F with RootFolder = throw new ClassCastException
+    final override def asRootFolder: F & RootFolder = throw new ClassCastException
 
-    final override def asNonRootFolder: F with NonRootFolder = this.asInstanceOf[F with NonRootFolder]
+    final override def asNonRootFolder: F & NonRootFolder = this.asInstanceOf[F & NonRootFolder]
 
     val parent: F
   }

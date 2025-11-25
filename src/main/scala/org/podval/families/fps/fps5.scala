@@ -10,8 +10,8 @@ trait StorageSystem {
   type C <: Connection
   type F <: Folder
 
-  final type RF = F with RootFolder
-  final type NF = F with NonRootFolder
+  final type RF = F & RootFolder
+  final type NF = F & NonRootFolder
 
   trait Connection {
     def rootFolder: RF

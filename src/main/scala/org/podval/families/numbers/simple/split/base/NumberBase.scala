@@ -13,7 +13,7 @@ trait NumberBase[S <: NumberSystem[S]] extends Ordered[S#Number] { this: S#Numbe
   def digits: List[Int]
 
   final def digit(n: Int): Int =
-    if (digits.length >= n) digits(n) else 0
+    if digits.length >= n then digits(n) else 0
 
   final def digit(n: Int, value: Int): S#Number =
     create(negative, digits.padTo(n + 1, 0).updated(n, value))
@@ -24,7 +24,7 @@ trait NumberBase[S <: NumberSystem[S]] extends Ordered[S#Number] { this: S#Numbe
 
   final def *(n: Int): S#Number = create(negative, digits map (n * _))
 
-  private[this] final def plusMinus(operationNegation: Boolean, that: S#Number): Raw =
+  private final def plusMinus(operationNegation: Boolean, that: S#Number): Raw =
     ???
 
   final def compare(that: S#Number): Int =
@@ -32,5 +32,5 @@ trait NumberBase[S <: NumberSystem[S]] extends Ordered[S#Number] { this: S#Numbe
 
   // TODO unchecked because of the erasure; compare NumberSystems...
   final override def equals(other: Any): Boolean =
-    if (!other.isInstanceOf[S#Number]) false else compare(other.asInstanceOf[S#Number]) == 0
+    if !other.isInstanceOf[S#Number] then false else compare(other.asInstanceOf[S#Number]) == 0
 }

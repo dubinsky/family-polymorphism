@@ -1,11 +1,9 @@
 plugins {
-  id 'com.github.ben-manes.versions' version '0.33.0'
-  id 'idea'
+  id 'com.github.ben-manes.versions' version '0.53.0'
   id 'scala'
 }
 
 repositories {
-  jcenter()
   mavenCentral()
   mavenLocal()
 }
@@ -14,21 +12,34 @@ group = 'org.podval.families'
 description = 'Family Polymorphism in Scala'
 version = '0.1'
 
-idea {
-  project {
-    jdkName = '1.8'
-    vcs = 'Git'
-  }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-  module {
-    excludeDirs += [
-            file('.idea'),
-            file('gradle')
-    ]
+scala.scalaVersion = '3.7.4'
+
+dependencies {
+  // Note: 7.3.0 disabled retrieval of the DTDs over HTTP:
+  testImplementation 'org.testng:testng:7.1.0'
+}
+
+def isNonStable = { String version ->
+  boolean stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+  String regex = /^[0-9,.v-]+(-r)?$/
+  return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+  rejectVersionIf {
+    isNonStable(it.candidate.version)
   }
 }
 
-dependencies {
-  implementation "org.scala-lang:scala-library:$scalaVersion"
-  testImplementation "org.testng:testng:$testngVersion"
+tasks.withType(ScalaCompile).configureEach {
+  scalaCompileOptions.with {
+    additionalParameters = [
+      '-new-syntax',
+      '-feature',
+      '-language:strictEquality',
+      '-source:future'
+    ]
+  }
 }
