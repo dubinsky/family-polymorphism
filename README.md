@@ -1,5 +1,7 @@
 # Studies in Family Polymorphism
 
+Note: archived.
+
 ## Warning
 This is a part of the strongly-typed narrative; if you
 - view type systems as bondage-and-discipline;
